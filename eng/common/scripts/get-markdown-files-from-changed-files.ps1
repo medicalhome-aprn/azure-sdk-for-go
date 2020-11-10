@@ -1,12 +1,12 @@
 param (
     # The root repo we scaned with.
-    [string[]] $RootRepo = "./",
+    [string[]] $RootRepo = '$PSScriptRoot/../../..',
     # The target branch to compare with.
     [string] $targetBranch = "origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH}"
 )
-$deletedFiles = (git diff origin/$targetBranch HEAD --name-only --diff-filter=D)
-$renamedFiles = (git diff origin/$targetBranch HEAD --diff-filter=R)
-$changedMarkdowns = (git diff origin/$targetBranch HEAD --name-only -- '*.md')
+$deletedFiles = (git diff $targetBranch HEAD --name-only --diff-filter=D)
+$renamedFiles = (git diff $targetBranch HEAD --diff-filter=R)
+$changedMarkdowns = (git diff $targetBranch HEAD --name-only -- '*.md')
 
 $beforeRenameFiles = @()
 # Retrieve the renamed from files.
