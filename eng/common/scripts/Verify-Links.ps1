@@ -30,6 +30,7 @@ function NormalizeUrl([string]$url){
     $url = "file://" + (Resolve-Path $url).ToString();
   }
 
+  Write-Verbose "The url to check against: $url."
   $uri = [System.Uri]$url;
 
   if ($script:baseUrl -eq "") {
@@ -295,10 +296,6 @@ $checkedLinks = @{};
 $badLinks = @{};
 $pageUrisToCheck = new-object System.Collections.Queue
 foreach ($url in $urls) {
-  if (!$url) {
-    LogWarning "There is an empty markdown in the input urls."
-    continue
-  }
   $uri = NormalizeUrl $url  
   $pageUrisToCheck.Enqueue($uri);
 }
